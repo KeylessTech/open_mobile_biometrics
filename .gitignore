@@ -1,0 +1,13 @@
+fmcore/build
+fmcore/build-native
+fmcore/build-ios
+fmcore/build-android
+fmcore/models
+android/.kotlin/errors
+android/.idea
+
+*.onnx
+FaceMatchTestApp/*
+android/.run/*
+android/publish_aar.sh
+release/*

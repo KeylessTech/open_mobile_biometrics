@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_margin="16dp"
+    android:fitsSystemWindows="true">
+
+    <!-- Reference Label -->
+    <TextView
+        android:id="@+id/referenceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reference Image"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Take Picture Button -->
+    <Button
+        android:id="@+id/takeReferenceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Picture"
+        app:layout_constraintTop_toBottomOf="@id/referenceLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Reference Image -->
+    <ImageView
+        android:id="@+id/referenceImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:background="#DDDDDD"
+        app:layout_constraintTop_toBottomOf="@id/takeReferenceButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toTopOf="@id/captureMatchButton"
+        android:layout_marginTop="8dp" />
+
+    <!-- Capture and Match Button -->
+    <Button
+        android:id="@+id/captureMatchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Capture and Match"
+        app:layout_constraintTop_toBottomOf="@id/referenceImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/captureMatchButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Liveness Result -->
+    <TextView
+        android:id="@+id/livenessLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liveness Result:"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/captureMatchButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/livenessValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/livenessLabel"
+        app:layout_constraintStart_toEndOf="@id/livenessLabel"
+        android:layout_marginStart="8dp" />
+
+    <!-- Same Subject Result -->
+    <TextView
+        android:id="@+id/subjectLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Same Subject:"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/livenessLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/subjectValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/subjectLabel"
+        app:layout_constraintStart_toEndOf="@id/subjectLabel"
+        android:layout_marginStart="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

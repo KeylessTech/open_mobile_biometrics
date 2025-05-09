@@ -17,7 +17,8 @@ A cross-platform face recognition & liveness detection SDK with ready-to-use int
   - Android: single `.aar` + camera integration  
   - iOS: `.framework` + SwiftUI/Obj-C bridge  
 - **CLI tools**  
-  - `fmcore_test` (desktop pipeline)
+  - `fmcore_test` (desktop pipeline)  
+  - `liveness_test` (batch liveness benchmarking)  
 - **Demo Apps**  
   - Android & iOS sample apps  
 
@@ -29,6 +30,7 @@ A cross-platform face recognition & liveness detection SDK with ready-to-use int
 | -------------------------- | ------------ | --------------------------------------------- |
 | **fmcore**                 | C++          | Core pipeline library                         |
 | **fmcore_test**            | C++          | Native desktop demo                           |
+| **liveness_test**          | C++          | Liveness benchmarking tool                    |
 | **android/lib**            | Kotlin/JNI   | Android SDK + camera & JNI bridge             |
 | **ios/FatchMatchSDK**      | Swift/Obj-C  | iOS SDK + camera & Obj-C bridge               |
 | **android/demoapp**        | Kotlin       | Sample Android app                            |
@@ -92,24 +94,54 @@ The `config.json` is like this:
 Put it somewhere where it is accessible from your application (needs to be stored on the filesystem, so on Android if you simply put it into `raw` won't work, you then need to copy it to the filesystem to get a working path).
 
 
+
 ## Android
 
-0. Download the last lib.aar release from github
-
-
-1.    Add the AAR
+1. Add this to your `dependencyResolutionManagement` in `settings.gradle.kts`
 ```
-// settings.gradle
-repositories { flatDir { dirs 'libs' } }
-// app/build.gradle
-dependencies { implementation name: 'fmandroid', ext:'aar' }
+maven {
+    name = "Cloudsmith"
+    url = uri("https://dl.cloudsmith.io/gnKsVFVfev0qW2xd/keyless/open_mobile_biometrics/maven/")
+    credentials {
+        username = "token"
+        password = "gnKsVFVfev0qW2xd"
+    }
+}
 ```
 
-2.    Initialize & Use
+for example you want to have something like:
+
+```
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            name = "Cloudsmith"
+            url = uri("https://dl.cloudsmith.io/gnKsVFVfev0qW2xd/keyless/open_mobile_biometrics/maven/")
+            credentials {
+                username = "token"
+                password = "gnKsVFVfev0qW2xd"
+            }
+        }
+    }
+}
+```
+
+2. Add into your `dependencies` of your `build.gradle.kts`:
+
+```
+implementation("kl.open:facematchsdk")
+```
+
+3. Initialize & Use
 
 (This assumes you have a `config.json` file stored in `assets` of your app)
 
 ```
+import kl.open.fmandroid.FaceMatchSDK
+import kl.open.fmandroid.FaceMatchSdkImpl
+
 val sdk: FaceMatchSDK = FaceMatchSdkImpl(context)
 val configJson = context.assets.open("config.json").bufferedReader().use { it.readText() }
 check(sdk.init(configJson))
@@ -123,7 +155,9 @@ sdk.captureAndMatch(referencePath) { result ->
 }
 ```
 
-3.    Permissions
+4. Permissions
+
+Add this into your manifest:
 ```
 <uses-permission android:name="android.permission.CAMERA"/>
 ```

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
+    id("maven-publish")
 }
 
 android {
@@ -70,4 +71,33 @@ dependencies {
 
     implementation(libs.androidx.activity.compose.v172)
 
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "kl.open"
+                artifactId = "facematchsdk"
+                version = "0.0.3"
+            }
+        }
+
+        repositories {
+            maven {
+                name = "Cloudsmith"
+
+                val org = project.findProperty("cloudsmith.org") as String? ?: System.getenv("CLOUDSMITH_ORG")
+                val repo = project.findProperty("cloudsmith.repo") as String? ?: System.getenv("CLOUDSMITH_REPO")
+
+                url = uri("https://maven.cloudsmith.io/$org/$repo/")
+
+                credentials {
+                    username = project.findProperty("cloudsmith.user") as String? ?: System.getenv("CLOUDSMITH_USER")
+                    password = project.findProperty("cloudsmith.key") as String? ?: System.getenv("CLOUDSMITH_KEY")
+                }
+            }
+        }
+    }
 }

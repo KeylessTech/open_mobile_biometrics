@@ -11,3 +11,6 @@ FaceMatchTestApp/*
 android/.run/*
 android/publish_aar.sh
 release/*
+deploy_keys/*
+
+ios/FaceMatchSDK/FaceMatchSDK.xcodeproj/project.xcworkspace/xcuserdata/manuele.xcuserdatad/UserInterfaceState.xcuserstate

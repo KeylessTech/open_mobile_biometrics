@@ -18,12 +18,14 @@ class FaceMatchSdkImpl(private val context: Context) : FaceMatchSDK {
         val modelBasePath = context.filesDir.absolutePath
         val parsedConfig = JSONObject(configJson)
 
-        val livenessModel = parsedConfig.optString("liveness_model")
+        val livenessModel0 = parsedConfig.optString("liveness_model0")
+        val livenessModel1 = parsedConfig.optString("liveness_model1")
         val faceDetectorModel = parsedConfig.optString("face_detector_model")
         val embeddingModel = parsedConfig.optString("embedding_extractor_model")
 
         // Copy models from assets to internal storage
-        copyAssetIfNeeded(livenessModel, modelBasePath)
+        copyAssetIfNeeded(livenessModel0, modelBasePath)
+        copyAssetIfNeeded(livenessModel1, modelBasePath)
         copyAssetIfNeeded(faceDetectorModel, modelBasePath)
         copyAssetIfNeeded(embeddingModel, modelBasePath)
 

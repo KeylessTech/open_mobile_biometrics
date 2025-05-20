@@ -63,7 +63,7 @@ bool FMCore::init(const std::string& configJson, const std::string& modelBasePat
     }
 
     // Extract model names
-    if (!config.contains("liveness_model")) {
+    if (!config.contains("liveness_model0") || !config.contains("liveness_model1")) {
         std::cerr << "[FMCore] Missing liveness model in config." << std::endl;
         return false;
     }
@@ -76,17 +76,24 @@ bool FMCore::init(const std::string& configJson, const std::string& modelBasePat
         return false;
     }
 
-    const std::string livenessModel = config["liveness_model"];
+    const std::string livenessModel0 = config["liveness_model0"];
+    const std::string livenessModel1 = config["liveness_model1"];
     const std::string faceModel = config["face_detector_model"];
     const std::string embModel = config["embedding_extractor_model"];
     const float livenessThresh = config["liveness_threshold"];
     matchingThresh = config["matching_threshold"];
 
-    std::string livenessModelPath = joinPath(modelBasePath, livenessModel);
+    std::string livenessModel0Path = joinPath(modelBasePath, livenessModel0);
+    std::string livenessModel1Path = joinPath(modelBasePath, livenessModel1);
+    std::vector<std::string> livenessModelPaths;
+    livenessModelPaths.push_back(livenessModel0Path);
+    livenessModelPaths.push_back(livenessModel1Path);
     std::string faceModelPath = joinPath(modelBasePath, faceModel);
     std::string embModelPath = joinPath(modelBasePath, embModel);
     
-    std::cout << "[FMCore] Liveness model path: " << livenessModelPath << std::endl;
+    
+    std::cout << "[FMCore] Liveness model0 path: " << livenessModel0Path << std::endl;
+    std::cout << "[FMCore] Liveness model1 path: " << livenessModel1Path << std::endl;
     std::cout << "[FMCore] Face detector model path: " << faceModelPath << std::endl;
     std::cout << "[FMCore] Embedding extractor model path: " << embModelPath << std::endl;
     
@@ -94,7 +101,7 @@ bool FMCore::init(const std::string& configJson, const std::string& modelBasePat
     ort_session_options.SetIntraOpNumThreads(1);
     ort_session_options.SetGraphOptimizationLevel(ORT_ENABLE_BASIC);
     
-    bool res_ld = init_liveness_detector(ort_session_options, livenessModelPath, livenessThresh);
+    bool res_ld = init_liveness_detector(ort_session_options, livenessModelPaths, livenessThresh);
     if (!res_ld) {
         std::cerr << "[FMCore] Failed to init liveness detector" << std::endl;
     }

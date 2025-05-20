@@ -3,6 +3,7 @@ fmcore/build-native
 fmcore/build-ios
 fmcore/build-android
 fmcore/models
+fmcore/test/liveness_results.csv
 android/.kotlin/errors
 android/.idea
 
@@ -12,5 +13,6 @@ android/.run/*
 android/publish_aar.sh
 release/*
 deploy_keys/*
+
 
 ios/FaceMatchSDK/FaceMatchSDK.xcodeproj/project.xcworkspace/xcuserdata/manuele.xcuserdatad/UserInterfaceState.xcuserstate

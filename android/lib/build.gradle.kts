@@ -80,7 +80,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "kl.open"
                 artifactId = "facematchsdk"
-                version = "0.0.3"
+                version = "0.0.4"
             }
         }
 

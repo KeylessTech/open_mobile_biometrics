@@ -86,9 +86,10 @@ The `config.json` is like this:
 {
   "face_detector_model": "mediapipe_long.onnx",
   "embedding_extractor_model": "glintr100.onnx",
-  "liveness_model": "liveness.onnx",
-  "liveness_threshold": 0.5,
-  "matching_threshold": 0.6
+  "liveness_model0": "silentface40.onnx",
+  "liveness_model1": "silentface27.onnx",
+  "liveness_threshold": 0.972017,
+  "matching_threshold": 0.5
 }
 ```
 Put it somewhere where it is accessible from your application (needs to be stored on the filesystem, so on Android if you simply put it into `raw` won't work, you then need to copy it to the filesystem to get a working path).
